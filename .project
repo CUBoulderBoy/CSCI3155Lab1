@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <projectDescription>
   <name>lab1</name>
   <buildSpec>
@@ -11,3 +12,23 @@
   </natures>
   <linkedResources> </linkedResources>
 </projectDescription>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>lab1</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.scala-ide.sdt.core.scalabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.scala-ide.sdt.core.scalanature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+</projectDescription>
+>>>>>>> 58ef2c2662dbbc0dfef5971550ecd634c8ca6f71
