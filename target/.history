@@ -68,8 +68,3 @@ exit
 eclipse
 project grader
 project lab1-grader
-eclipse
-compile
-clean
-quit
-exit

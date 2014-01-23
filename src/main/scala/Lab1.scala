@@ -1,13 +1,13 @@
-object Lab1 extends jsy.util.JsyApplication {
+﻿object Lab1 extends jsy.util.JsyApplication {
   import jsy.lab1.ast._
   import jsy.lab1.Parser
   
   /*
    * CSCI 3155: Lab 1
-   * <Your Name>
+   * Jeremy Granger
    * 
-   * Partner: <Your Partner's Name>
-   * Collaborators: <Any Collaborators>
+   * Partner: Christopher Jordan
+   * Collaborators: None
    */
 
   /*
@@ -75,18 +75,29 @@ object Lab1 extends jsy.util.JsyApplication {
 
   /* Exercises */
 
-  def abs(n: Double): Double = throw new UnsupportedOperationException
+  def abs(n: Double): Double = if (n >= 0) n else (-1 * n)
 
-  def xor(a: Boolean, b: Boolean): Boolean = throw new UnsupportedOperationException
+  def xor(a: Boolean, b: Boolean): Boolean = {
+    if ((a == true && b == true) || (a == false && b == false)) false
+    else true
+  }
 
-  def repeat(s: String, n: Int): String = throw new UnsupportedOperationException
+  def repeat(s: String, n: Int): String = { require(n >= 0)
+    if (n == 0) ""
+    else if (n == 1) s else s + repeat(s, n - 1)
+  }
   
-  def sqrtStep(c: Double, xn: Double): Double = throw new UnsupportedOperationException
+  def sqrtStep(c: Double, xn: Double): Double = xn - (((xn * xn) - c) / (2 * xn))
 
-  def sqrtN(c: Double, x0: Double, n: Int): Double = throw new UnsupportedOperationException
+  def sqrtN(c: Double, x0: Double, n: Int): Double = { require((n >= 0) && (c > 0))
+    if (n == 0) x0
+    else sqrtN(c, (sqrtStep(c, x0)), (n - 1))
+  }
   
-  def sqrtErr(c: Double, x0: Double, epsilon: Double): Double =
-    throw new UnsupportedOperationException
+  def sqrtErr(c: Double, x0: Double, epsilon: Double): Double = { require(c > 0 && epsilon > 0)
+    if (abs((x0 * x0 - c)) < epsilon) x0
+    else sqrtErr(c, sqrtStep(c, x0), epsilon)
+  }
 
   def sqrt(c: Double): Double = {
     require(c >= 0)
@@ -102,29 +113,62 @@ object Lab1 extends jsy.util.JsyApplication {
   def repOk(t: SearchTree): Boolean = {
     def check(t: SearchTree, min: Int, max: Int): Boolean = t match {
       case Empty => true
-      case Node(l, d, r) => throw new UnsupportedOperationException
+      case Node(l, d, r) => {
+        if ((d >= min) && (d <= max)) {
+        	check(l, min, d) && check(r, d, max)
+      	}
+        else {
+          false
+        }
+      }
     }
     check(t, Int.MinValue, Int.MaxValue)
   }
   
-  def insert(t: SearchTree, n: Int): SearchTree = throw new UnsupportedOperationException
+  def insert(t: SearchTree, n: Int): SearchTree = t match {
+    case Empty => Node(Empty, n, Empty)
+    case Node(l, d, r) => {
+        if (n < d) Node(insert(l, n), d, r)
+        else Node(l, d, insert(r, n))
+    }
+}
   
-  def deleteMin(t: SearchTree): (SearchTree, Int) = {
+def deleteMin(t: SearchTree): (SearchTree, Int) = {
     require(t != Empty)
     (t: @unchecked) match {
-      case Node(Empty, d, r) => (r, d)
-      case Node(l, d, r) =>
-        val (l1, m) = deleteMin(l)
-        throw new UnsupportedOperationException
+        case Node(Empty, d, r) => (r, d)
+        case Node(l, d, r) =>
+            val (l1, m) = deleteMin(l)
+            (Node(l1, d, r), m)
     }
-  }
+}
  
-  def delete(t: SearchTree, n: Int): SearchTree = throw new UnsupportedOperationException
+def delete(t: SearchTree, n: Int): SearchTree = t match {
+    case Empty => Empty
+  	case Node(l, `n`, Empty) => Empty
+  	case Node(l, `n`, r) => {
+  		val (nrt, nv)= deleteMin(r)
+  		Node(l, nv, nrt)
+  	}
+  	case Node(l, d, r) => {
+  		if (n >= d) Node(l, d, delete(r, n))
+  		else Node(delete(l, n), d, r)
+  	}
+  }
   
   /* JavaScripty */
   
   def eval(e: Expr): Double = e match {
-    case N(n) => throw new UnsupportedOperationException
+    case N(n) => n
+    case Unary(Neg, e) => - eval(e)
+    case Binary(Plus, e1, e2) =>   eval(e1) + eval(e2)
+    case Binary(Minus, e1, e2) => eval(e1) - eval(e2)
+    case Binary(Times, e1, e2) => eval(e1) * eval(e2)
+    case Binary(Div, en, ed) => {
+      if (eval(ed) > 0) eval(en) / eval(ed)
+      else if (eval(en) < 0) Double.NegativeInfinity
+      else Double.PositiveInfinity
+      }
     case _ => throw new UnsupportedOperationException
   }
   

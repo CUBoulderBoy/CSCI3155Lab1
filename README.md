@@ -8,7 +8,6 @@ Refer to the lab handout lab1.pdf for details about the assignment.  This file p
 ```
 ├── README.md  (this file)
 ├── grader  (autograder project files)
-├── koans  (Scala Koans)
 ├── src
 │   ├── main
 │   │   ├── java
@@ -38,13 +37,9 @@ To install Scala IDE, first [download](http://www.eclipse.org/downloads/) and in
 
 To import the Lab 1 project files into Eclipse, go to
 
-    File > Import > Existing Projects into Workspace (under General)
+    File > Import > Archive File (under General)
 
-and then select
-
-    Select archive file:
-
-and browse to the lab1.zip that you downloaded from the course website.
+and then select lab1.zip that you downloaded from the course website.
 
 ### Command-Line Tools
 
