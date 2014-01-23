@@ -1,4 +1,4 @@
-﻿object Lab1 extends jsy.util.JsyApplication {
+object Lab1 extends jsy.util.JsyApplication {
   import jsy.lab1.ast._
   import jsy.lab1.Parser
   
